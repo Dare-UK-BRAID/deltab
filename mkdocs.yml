@@ -8,6 +8,8 @@ docs_dir: docs
 
 theme:
   name: material
+  logo: assets/BRAID_logo_light.png
+  favicon: assets/BRAID_logo_light.png
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
