@@ -1,0 +1,76 @@
+site_name: deltab — Brain Age Estimation
+site_description: Technical documentation for deltab, a Python package for brain age modelling and brain age delta estimation based on Smith et al. (2019)
+site_author: Martin Craig
+site_url: https://dare-uk-braid.github.io/deltab/
+repo_url: https://github.com/Dare-UK-BRAID/deltab
+repo_name: Dare-UK-BRAID/deltab
+docs_dir: docs
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tooltips
+
+extra_css:
+  - stylesheets/braid.css
+
+extra_javascript:
+  - javascripts/external_links.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Theory: theory.md
+  - Prediction Models: models.md
+  - Installation: installation.md
+  - Command Line Interface: cli.md
+  - Python API: api.md
+  - Examples: examples.md
