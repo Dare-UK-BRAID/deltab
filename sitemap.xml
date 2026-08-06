@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/api/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/cli/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/examples/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/installation/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/models/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/theory/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+</urlset>

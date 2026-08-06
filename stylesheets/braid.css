@@ -1,0 +1,196 @@
+/* ================================================================
+   BRAID theme — light blue accent, no cyan
+   Primary dark:  #282832
+   Accent blue:   #8DBBCC
+   Accent pink:   #ff7a94  (warnings only)
+   ================================================================ */
+
+/* ── Header ──────────────────────────────────────────────────────────── */
+.md-header {
+  background-color: #282832 !important;
+}
+
+/* ── Accent variable override ────────────────────────────────────────── */
+:root {
+  --braid-blue:   #8DBBCC;
+  --braid-blue-light: #d6eaf1;
+  --braid-blue-mid:   #5a9ab0;
+  --braid-pink:   #ff7a94;
+  --braid-dark:   #282832;
+  --md-accent-fg-color: #8DBBCC;
+  --md-accent-fg-color--transparent: rgba(141, 187, 204, 0.1);
+}
+
+/* ── Navigation — black text, blue active accent ─────────────────────── */
+.md-nav__link,
+.md-nav__link:focus,
+.md-nav__link:hover,
+.md-nav__link--active,
+.md-nav__item--active > .md-nav__link,
+.md-nav__title {
+  color: #282832 !important;
+}
+
+.md-nav__link--active,
+.md-nav__item--active > .md-nav__link {
+  border-left: 3px solid #8DBBCC;
+  padding-left: 0.4rem;
+  font-weight: 700;
+}
+
+.md-nav__link:hover {
+  font-weight: 600;
+}
+
+/* ── Body links — black text, blue underline ─────────────────────────── */
+.md-typeset a {
+  color: #282832 !important;
+  text-decoration: underline;
+  text-decoration-color: #8DBBCC;
+  text-underline-offset: 2px;
+}
+
+.md-typeset a:hover {
+  color: #282832 !important;
+  text-decoration-color: #ff7a94;
+}
+
+/* ── Tables — blue shades ────────────────────────────────────────────── */
+.md-typeset table:not([class]) {
+  border: 1px solid #8DBBCC;
+  border-radius: 4px;
+  overflow: hidden;
+  display: table;
+  width: 100%;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: #5a9ab0 !important;
+  color: #ffffff !important;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.md-typeset table:not([class]) tr:nth-child(odd) td {
+  background-color: #ffffff !important;
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) td {
+  background-color: #d6eaf1 !important;
+}
+
+.md-typeset table:not([class]) td {
+  border-color: #8DBBCC !important;
+}
+
+/* First column: prevent variable names from wrapping */
+.md-typeset table:not([class]) td:first-child,
+.md-typeset table:not([class]) th:first-child {
+  white-space: nowrap;
+}
+
+/* Allow table to scroll horizontally on small screens */
+.md-typeset__scrollwrap {
+  overflow-x: auto;
+}
+
+/* ── Admonitions ─────────────────────────────────────────────────────── */
+.md-typeset .admonition,
+.md-typeset details {
+  border-left-color: #8DBBCC;
+}
+
+/* Note / Info — light blue */
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary,
+.md-typeset .info > .admonition-title,
+.md-typeset .info > summary {
+  background-color: rgba(74, 158, 218, 0.15) !important;
+}
+
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before,
+.md-typeset .info > .admonition-title::before,
+.md-typeset .info > summary::before {
+  background-color: #8DBBCC !important;
+  -webkit-mask-image: var(--md-admonition-icon--note);
+  mask-image: var(--md-admonition-icon--note);
+}
+
+.md-typeset .admonition.note,
+.md-typeset details.note,
+.md-typeset .admonition.info,
+.md-typeset details.info {
+  border-left-color: #8DBBCC;
+}
+
+/* Warning — BRAID pink */
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
+  border-left-color: #ff7a94;
+}
+
+.md-typeset .warning > .admonition-title,
+.md-typeset .warning > summary {
+  background-color: rgba(255, 122, 148, 0.15) !important;
+}
+
+.md-typeset .warning > .admonition-title::before,
+.md-typeset .warning > summary::before {
+  background-color: #ff7a94 !important;
+}
+
+/* ── Search highlight ────────────────────────────────────────────────── */
+.md-search-result mark {
+  color: #282832;
+  background-color: rgba(74, 158, 218, 0.3);
+  border-radius: 2px;
+}
+
+/* ── Permalink anchor ────────────────────────────────────────────────── */
+.md-typeset .headerlink {
+  color: #8DBBCC !important;
+}
+
+/* ── Code copy button ────────────────────────────────────────────────── */
+.md-clipboard:hover {
+  color: #8DBBCC;
+}
+
+/* ── Logo ────────────────────────────────────────────────────────────── */
+.md-header__button.md-logo {
+  padding: 0.2rem 0.6rem;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 2.2rem;
+  width: auto;
+  max-width: 200px;
+}
+
+/* ── Dark mode ───────────────────────────────────────────────────────── */
+[data-md-color-scheme="slate"] .md-nav__link,
+[data-md-color-scheme="slate"] .md-nav__link:hover,
+[data-md-color-scheme="slate"] .md-nav__link--active,
+[data-md-color-scheme="slate"] .md-nav__item--active > .md-nav__link {
+  color: #e8e8e8 !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset a {
+  color: #e8e8e8 !important;
+  text-decoration-color: #8DBBCC;
+}
+
+[data-md-color-scheme="slate"] .md-typeset a:hover {
+  color: #ffffff !important;
+  text-decoration-color: #ff7a94;
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tr:nth-child(even) {
+  background-color: #1a2744;
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tr:nth-child(odd) {
+  background-color: #1e2a3a;
+}
