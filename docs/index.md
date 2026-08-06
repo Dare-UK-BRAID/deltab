@@ -1,5 +1,11 @@
 # deltab — Brain Age Estimation
 
+!!! note "Derived Work"
+    This package and documentation implement the brain age estimation framework described in **Smith, S.M. et al. (2019). Estimation of brain age delta from brain imaging. *NeuroImage*, 200, 528–539**, originally developed at the University of Oxford. The BRAID project has packaged and adapted it for deployment within Trusted Research Environments (TREs) under federated analytics frameworks.
+
+!!! info "Target Audience"
+    Neuroimaging researchers and quantitative scientists working on brain age modelling, whether as part of BRAID pipelines or other neuroimaging workflows.
+
 **deltab** is a Python package for estimating *brain age* and *brain age delta* from neuroimaging-derived phenotypes (IDPs) or other brain measurements. It implements the modelling framework described in:
 
 > Smith, S.M. et al. (2019). Estimation of brain age delta from brain imaging. *NeuroImage*, 200, 528–539. [https://doi.org/10.1016/j.neuroimage.2019.06.017](https://doi.org/10.1016/j.neuroimage.2019.06.017)
