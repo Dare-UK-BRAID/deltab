@@ -28,4 +28,36 @@
          <loc>https://dare-uk-braid.github.io/deltab/theory/</loc>
          <lastmod>2026-08-06</lastmod>
     </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/federated/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/federated/compute-requirements/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/federated/differential-privacy/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/federated/egress/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/federated/membership-attacks/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/federated/node-requirements/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/federated/secure-aggregation/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
+    <url>
+         <loc>https://dare-uk-braid.github.io/deltab/federated/thresholds/</loc>
+         <lastmod>2026-08-06</lastmod>
+    </url>
 </urlset>

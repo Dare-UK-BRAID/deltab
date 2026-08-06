@@ -1,0 +1,1357 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Technical documentation for deltab, a Python package for brain age modelling and brain age delta estimation based on Smith et al. (2019)">
+      
+      
+        <meta name="author" content="Martin Craig">
+      
+      
+        <link rel="canonical" href="https://dare-uk-braid.github.io/deltab/federated/secure-aggregation/">
+      
+      
+        <link rel="prev" href="../differential-privacy/">
+      
+      
+        <link rel="next" href="../thresholds/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/BRAID_logo_light.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Secure Aggregation & MPC - deltab — Brain Age Estimation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/braid.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#secure-aggregation-mpc" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="deltab — Brain Age Estimation" class="md-header__button md-logo" aria-label="deltab — Brain Age Estimation" data-md-component="logo">
+      
+  <img src="../../assets/BRAID_logo_light.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            deltab — Brain Age Estimation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Secure Aggregation & MPC
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Dare-UK-BRAID/deltab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Dare-UK-BRAID/deltab
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="deltab — Brain Age Estimation" class="md-nav__button md-logo" aria-label="deltab — Brain Age Estimation" data-md-component="logo">
+      
+  <img src="../../assets/BRAID_logo_light.png" alt="logo">
+
+    </a>
+    deltab — Brain Age Estimation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Dare-UK-BRAID/deltab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Dare-UK-BRAID/deltab
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prediction Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Command Line Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Federated Brain Age Estimation Requirements
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Federated Brain Age Estimation Requirements
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../egress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Egress & Privacy Risk Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../membership-attacks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Membership Inference Attacks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../differential-privacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Differential Privacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Secure Aggregation & MPC
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Secure Aggregation & MPC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-secure-aggregation-matters-for-deltab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Secure Aggregation Matters for deltab
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregation-strategies-for-deltab-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aggregation Strategies for deltab Parameters
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aggregation Strategies for deltab Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#federated-averaging-of-model-weights" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Federated averaging of model weights
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normalisation-statistics-aggregation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normalisation statistics aggregation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-aggregation-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure Aggregation Protocols
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Aggregation Protocols">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pairwise-masking-bonawitz-et-al-2017" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pairwise masking (Bonawitz et al., 2017)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#homomorphic-encryption-he" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Homomorphic Encryption (HE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secure-multi-party-computation-smpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure Multi-Party Computation (SMPC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gradient-sharing-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient Sharing Considerations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-architecture-for-dpuk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Architecture for DPUK
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frameworks-and-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frameworks and Libraries
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../thresholds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disclosure Thresholds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../node-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node Data & Software Requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../compute-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compute Requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-secure-aggregation-matters-for-deltab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Secure Aggregation Matters for deltab
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregation-strategies-for-deltab-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aggregation Strategies for deltab Parameters
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aggregation Strategies for deltab Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#federated-averaging-of-model-weights" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Federated averaging of model weights
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normalisation-statistics-aggregation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normalisation statistics aggregation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-aggregation-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure Aggregation Protocols
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Aggregation Protocols">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pairwise-masking-bonawitz-et-al-2017" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pairwise masking (Bonawitz et al., 2017)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#homomorphic-encryption-he" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Homomorphic Encryption (HE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secure-multi-party-computation-smpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure Multi-Party Computation (SMPC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gradient-sharing-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient Sharing Considerations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-architecture-for-dpuk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Architecture for DPUK
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frameworks-and-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frameworks and Libraries
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="secure-aggregation-mpc">Secure Aggregation &amp; MPC<a class="headerlink" href="#secure-aggregation-mpc" title="Permanent link">&para;</a></h1>
+<p>Secure aggregation and Multi-Party Computation (MPC) allow a central aggregator to compute functions over model parameters from multiple TRE nodes without learning the individual node's contributions. For federated brain age estimation, these techniques prevent the central server from inferring which node contributed anomalous parameters — which could in turn reveal something about that node's cohort.</p>
+<hr />
+<h2 id="why-secure-aggregation-matters-for-deltab">Why Secure Aggregation Matters for deltab<a class="headerlink" href="#why-secure-aggregation-matters-for-deltab" title="Permanent link">&para;</a></h2>
+<p>In a naive federated deployment, each TRE node sends its model weights (β₁, β₂, PCA components, normalisation statistics) directly to the central aggregator. Even if each node applies differential privacy noise before egress, the central server can still:</p>
+<ul>
+<li>Compare parameters across nodes to identify which node has an unusual cohort</li>
+<li>Combine parameters from multiple nodes to partially reconstruct the training data distribution</li>
+<li>Perform node-level membership inference (attributing a model anomaly to a specific node, and by extension to that node's subjects)</li>
+</ul>
+<p>Secure aggregation prevents the central server from seeing individual node contributions: it receives only the <strong>sum</strong> (or <strong>weighted average</strong>) of parameters across all participating nodes.</p>
+<hr />
+<h2 id="aggregation-strategies-for-deltab-parameters">Aggregation Strategies for deltab Parameters<a class="headerlink" href="#aggregation-strategies-for-deltab-parameters" title="Permanent link">&para;</a></h2>
+<h3 id="federated-averaging-of-model-weights">Federated averaging of model weights<a class="headerlink" href="#federated-averaging-of-model-weights" title="Permanent link">&para;</a></h3>
+<p>The standard approach (McMahan et al., 2017 — FedAvg) averages the model weights from each node weighted by cohort size:</p>
+<blockquote>
+<p>β₁_global = Σ (Nᵢ / N_total) · β₁ᵢ</p>
+</blockquote>
+<p>For deltab this is straightforward for <code>b1</code>, <code>b2</code>, <code>b2sq</code> (all scalar or low-dimensional vectors). The challenge is aggregating PCA components, which are not straightforwardly averageable because each node's PCA may select different axes.</p>
+<p><strong>PCA aggregation options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Description</th>
+<th>Suitability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Federated PCA (power iteration)</td>
+<td>Iteratively refine shared eigenvectors across nodes</td>
+<td>Best accuracy; requires multiple communication rounds</td>
+</tr>
+<tr>
+<td>Concatenate and re-decompose</td>
+<td>Each node sends its top-J components; central server decomposes the concatenated matrix</td>
+<td>Simple; leaks node-specific components unless encrypted</td>
+</tr>
+<tr>
+<td>Use a shared pre-trained PCA</td>
+<td>Apply a single PCA fitted on a normative public dataset (e.g. UK Biobank summary statistics) across all nodes</td>
+<td>Removes within-federation PCA sharing entirely; recommended for DPUK</td>
+</tr>
+</tbody>
+</table>
+<p>The shared normative PCA approach is the most privacy-preserving: the PCA is fitted once on publicly released data and distributed to all nodes, so no node-specific covariance information is transmitted.</p>
+<h3 id="normalisation-statistics-aggregation">Normalisation statistics aggregation<a class="headerlink" href="#normalisation-statistics-aggregation" title="Permanent link">&para;</a></h3>
+<p>The feature means (<code>x_mean</code>) and standard deviations (<code>x_std</code>) must be harmonised across nodes before model averaging is meaningful. Two approaches:</p>
+<ul>
+<li><strong>Global normalisation</strong>: Compute global mean and SD using secure aggregation (Σᵢ Nᵢ·meanᵢ / N_total) before training begins. Each node normalises its data using the global statistics.</li>
+<li><strong>Local normalisation + re-weighting</strong>: Each node normalises locally; aggregated weights are corrected analytically. More complex but avoids a pre-training communication round.</li>
+</ul>
+<hr />
+<h2 id="secure-aggregation-protocols">Secure Aggregation Protocols<a class="headerlink" href="#secure-aggregation-protocols" title="Permanent link">&para;</a></h2>
+<h3 id="pairwise-masking-bonawitz-et-al-2017">Pairwise masking (Bonawitz et al., 2017)<a class="headerlink" href="#pairwise-masking-bonawitz-et-al-2017" title="Permanent link">&para;</a></h3>
+<p>Each pair of nodes agrees on a random mask. Node A adds the mask to its parameters; node B subtracts it. The central server sees masked values from each node; the masks cancel in the sum, revealing only the aggregate.</p>
+<p>This protocol is robust to node dropout and does not require a trusted third party. It has been standardised in several federated learning frameworks (e.g. PySyft, FATE, Flower).</p>
+<p><strong>Applicability to deltab:</strong> Directly applicable. Each node masks β₁ᵢ before transmission; the aggregator computes Σ masked β₁ᵢ = Σ β₁ᵢ (masks cancel). The aggregator learns only the sum, not individual contributions.</p>
+<h3 id="homomorphic-encryption-he">Homomorphic Encryption (HE)<a class="headerlink" href="#homomorphic-encryption-he" title="Permanent link">&para;</a></h3>
+<p>Nodes encrypt their parameters under a public key. The central server aggregates encrypted ciphertexts and decrypts only the final aggregate using the private key. No plaintext node parameters are ever exposed to the server.</p>
+<p><strong>Applicability to deltab:</strong> Feasible for <code>b1</code>, <code>b2</code>, <code>b2sq</code> (low-dimensional). High computational overhead for PCA components (J × F matrix). Partially homomorphic encryption (Paillier scheme) is sufficient for summation-only aggregation.</p>
+<h3 id="secure-multi-party-computation-smpc">Secure Multi-Party Computation (SMPC)<a class="headerlink" href="#secure-multi-party-computation-smpc" title="Permanent link">&para;</a></h3>
+<p>A generalisation of pairwise masking where a threshold of nodes must collude before any individual contribution is revealed. SMPC with a (t, n)-threshold scheme requires t+1 nodes to cooperate to reconstruct any individual share.</p>
+<p><strong>Applicability to deltab:</strong> Suitable for small federations (3–10 nodes) where each node is a separate institution with adversarial interests. For DPUK, a (2, N)-threshold (any 2 nodes) is a reasonable starting point.</p>
+<hr />
+<h2 id="gradient-sharing-considerations">Gradient Sharing Considerations<a class="headerlink" href="#gradient-sharing-considerations" title="Permanent link">&para;</a></h2>
+<p>deltab uses closed-form ordinary least squares (pseudoinverse) rather than iterative gradient descent. This means there are no gradients to share — only the final parameter vectors. This is advantageous from a security perspective because:</p>
+<ul>
+<li>Gradient inversion attacks (Zhu et al., 2019) are not directly applicable</li>
+<li>There is no per-iteration communication round that could leak intermediate states</li>
+<li>The attack surface is limited to the final exported parameters</li>
+</ul>
+<p>However, if deltab is extended to use iterative fitting (e.g. stochastic gradient descent for very large feature sets), gradient sharing risks would need to be re-evaluated.</p>
+<hr />
+<h2 id="recommended-architecture-for-dpuk">Recommended Architecture for DPUK<a class="headerlink" href="#recommended-architecture-for-dpuk" title="Permanent link">&para;</a></h2>
+<p>For a DPUK SeRP federated deployment, the recommended architecture is:</p>
+<ol>
+<li>
+<p><strong>Pre-training</strong>: Distribute a shared normative PCA (fitted on public UK Biobank summary statistics) to all nodes. No node-specific PCA is computed.</p>
+</li>
+<li>
+<p><strong>Local training</strong>: Each node runs <code>train()</code> using the shared PCA (replacing <code>pca.fit_transform()</code> with <code>pca.transform()</code> using the pre-fitted components). Only β₁, β₂, β₂sq are fitted locally.</p>
+</li>
+<li>
+<p><strong>Secure aggregation</strong>: Each node applies DP noise to β₁, β₂, β₂sq, then transmits masked (pairwise-masked or HE-encrypted) parameters to the central server.</p>
+</li>
+<li>
+<p><strong>Central aggregation</strong>: The server decrypts and computes the weighted average of β₁, β₂, β₂sq across nodes.</p>
+</li>
+<li>
+<p><strong>Global model distribution</strong>: The averaged parameters are broadcast back to all nodes for federated inference.</p>
+</li>
+<li>
+<p><strong>Output egress</strong>: Per-node inference results (delta vectors) remain local. Only aggregated group-level statistics (with DP noise and N ≥ threshold) are approved for egress.</p>
+</li>
+</ol>
+<hr />
+<h2 id="frameworks-and-libraries">Frameworks and Libraries<a class="headerlink" href="#frameworks-and-libraries" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Framework</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Flower (flwr)</strong></td>
+<td>Lightweight federated learning framework; easy integration with sklearn-style models; supports custom aggregation strategies</td>
+</tr>
+<tr>
+<td><strong>PySyft</strong></td>
+<td>SMPC and HE support; more complex; suited to high-security deployments</td>
+</tr>
+<tr>
+<td><strong>FATE</strong></td>
+<td>Production-grade FL platform; native HE and SMPC; designed for institutional federation</td>
+</tr>
+<tr>
+<td><strong>diffprivlib</strong></td>
+<td>IBM DP library; provides DP-PCA and DP linear regression compatible with sklearn API</td>
+</tr>
+<tr>
+<td><strong>TF Privacy / Opacus</strong></td>
+<td>DP-SGD for deep learning; not directly applicable to deltab's closed-form fitting unless reframed as SGD</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Bonawitz, K. et al. (2017). Practical Secure Aggregation for Privacy-Preserving Machine Learning. <em>ACM CCS</em>. <a href="https://doi.org/10.1145/3133956.3133982">https://doi.org/10.1145/3133956.3133982</a></li>
+<li>McMahan, B. et al. (2017). Communication-Efficient Learning of Deep Networks from Decentralized Data. <em>AISTATS</em>. <a href="https://arxiv.org/abs/1602.05629">https://arxiv.org/abs/1602.05629</a></li>
+<li>Zhu, L. et al. (2019). Deep Leakage from Gradients. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/1906.08935">https://arxiv.org/abs/1906.08935</a></li>
+<li>Rieke, N. et al. (2020). The future of digital health with federated learning. <em>npj Digital Medicine</em>, 3, 119. <a href="https://doi.org/10.1038/s41746-020-00323-1">https://doi.org/10.1038/s41746-020-00323-1</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../differential-privacy/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Differential Privacy">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Differential Privacy
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../thresholds/" class="md-footer__link md-footer__link--next" aria-label="Next: Disclosure Thresholds">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Disclosure Thresholds
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/external_links.js"></script>
+      
+    
+  </body>
+</html>

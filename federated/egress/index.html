@@ -1,0 +1,1492 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Technical documentation for deltab, a Python package for brain age modelling and brain age delta estimation based on Smith et al. (2019)">
+      
+      
+        <meta name="author" content="Martin Craig">
+      
+      
+        <link rel="canonical" href="https://dare-uk-braid.github.io/deltab/federated/egress/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../membership-attacks/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/BRAID_logo_light.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Egress & Privacy Risk Analysis - deltab — Brain Age Estimation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/braid.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#egress-privacy-risk-analysis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="deltab — Brain Age Estimation" class="md-header__button md-logo" aria-label="deltab — Brain Age Estimation" data-md-component="logo">
+      
+  <img src="../../assets/BRAID_logo_light.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            deltab — Brain Age Estimation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Egress & Privacy Risk Analysis
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Dare-UK-BRAID/deltab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Dare-UK-BRAID/deltab
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="deltab — Brain Age Estimation" class="md-nav__button md-logo" aria-label="deltab — Brain Age Estimation" data-md-component="logo">
+      
+  <img src="../../assets/BRAID_logo_light.png" alt="logo">
+
+    </a>
+    deltab — Brain Age Estimation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Dare-UK-BRAID/deltab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Dare-UK-BRAID/deltab
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prediction Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Command Line Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Federated Brain Age Estimation Requirements
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Federated Brain Age Estimation Requirements
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Egress & Privacy Risk Analysis
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Egress & Privacy Risk Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#egress-risk-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Egress Risk Classification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variable-level-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variable-Level Audit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variable-Level Audit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raw-inputs-retained-on-the-braindelta-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raw inputs retained on the BrainDelta object
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-parameters-what-should-be-transmitted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model parameters — what should be transmitted
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#critical-egress-risk-save-and-save_text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical Egress Risk: save() and save_text()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Critical Egress Risk: save() and save_text()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#save-pickle-serialisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        save() — pickle serialisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save_text-explicit-raw-data-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        save_text() — explicit raw data export
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging Risks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nan-imputation-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NaN Imputation Risk
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-egress-controls-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Egress Controls Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-modifications-required-for-tre-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Modifications Required for TRE Deployment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../membership-attacks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Membership Inference Attacks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../differential-privacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Differential Privacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../secure-aggregation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Secure Aggregation & MPC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../thresholds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disclosure Thresholds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../node-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node Data & Software Requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../compute-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compute Requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#egress-risk-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Egress Risk Classification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variable-level-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variable-Level Audit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variable-Level Audit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raw-inputs-retained-on-the-braindelta-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raw inputs retained on the BrainDelta object
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-parameters-what-should-be-transmitted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model parameters — what should be transmitted
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#critical-egress-risk-save-and-save_text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical Egress Risk: save() and save_text()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Critical Egress Risk: save() and save_text()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#save-pickle-serialisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        save() — pickle serialisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save_text-explicit-raw-data-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        save_text() — explicit raw data export
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging Risks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nan-imputation-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NaN Imputation Risk
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-egress-controls-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Egress Controls Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-modifications-required-for-tre-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Modifications Required for TRE Deployment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="egress-privacy-risk-analysis">Egress &amp; Privacy Risk Analysis<a class="headerlink" href="#egress-privacy-risk-analysis" title="Permanent link">&para;</a></h1>
+<p>This page provides a line-by-line audit of the deltab codebase (<code>deltab/deltab.py</code>, <code>deltab/main.py</code>) for data that risk leaving a TRE node and reaching a central aggregator, in violation of DPUK data governance requirements and TREvolution/SACRO egress principles.</p>
+<hr />
+<h2 id="egress-risk-classification">Egress Risk Classification<a class="headerlink" href="#egress-risk-classification" title="Permanent link">&para;</a></h2>
+<p>Each variable or output is classified as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HIGH</strong></td>
+<td>Contains raw subject-level data or can directly re-identify subjects. Must never leave the node without explicit DAC approval and SDC review.</td>
+</tr>
+<tr>
+<td><strong>MEDIUM</strong></td>
+<td>Contains derived statistics that could enable inference attacks if N is small or cohort is unusual. Requires SDC review before egress.</td>
+</tr>
+<tr>
+<td><strong>LOW</strong></td>
+<td>Aggregate parameters unlikely to re-identify subjects in most conditions. Still requires disclosure control audit.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="variable-level-audit">Variable-Level Audit<a class="headerlink" href="#variable-level-audit" title="Permanent link">&para;</a></h2>
+<h3 id="raw-inputs-retained-on-the-braindelta-object">Raw inputs retained on the <code>BrainDelta</code> object<a class="headerlink" href="#raw-inputs-retained-on-the-braindelta-object" title="Permanent link">&para;</a></h3>
+<p>After <code>train()</code> completes, the following subject-level arrays are stored as instance attributes and are therefore serialised into the pickle file produced by <code>save()</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Line</th>
+<th>Risk</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>self.ytrain</code></td>
+<td>62</td>
+<td><strong>HIGH</strong></td>
+<td>Full vector of true chronological ages, one per subject. Ages are quasi-identifying — in small or specialist cohorts they may uniquely identify individuals when combined with other attributes.</td>
+</tr>
+<tr>
+<td><code>self.xtrain</code></td>
+<td>68</td>
+<td><strong>HIGH</strong></td>
+<td>Full raw IDP feature matrix (N × F). Contains all imaging-derived phenotypes for every training subject. Transmission to a central server is equivalent to transmitting the imaging data itself.</td>
+</tr>
+<tr>
+<td><code>self.x_norm</code></td>
+<td>81</td>
+<td><strong>HIGH</strong></td>
+<td>Normalised (zero mean, unit std) feature matrix — still per-subject. Rescaling does not remove re-identification risk.</td>
+</tr>
+<tr>
+<td><code>self.x_reduced</code></td>
+<td>113</td>
+<td><strong>HIGH</strong></td>
+<td>PCA-reduced feature matrix (N × J). Per-subject embeddings in the reduced space. Dimensionality reduction does not prevent inversion when PCA components are also known.</td>
+</tr>
+<tr>
+<td><code>self.y_demean</code></td>
+<td>79</td>
+<td><strong>HIGH</strong></td>
+<td>Demeaned per-subject ages. Reversible to true age given <code>self.y_mean</code>.</td>
+</tr>
+<tr>
+<td><code>self.ysq</code>, <code>self.ysq_demean</code>, <code>self.ysq_orth</code></td>
+<td>121–125</td>
+<td><strong>MEDIUM</strong></td>
+<td>Per-subject quadratic age terms. Derived from <code>ytrain</code>; can be inverted to recover approximate ages.</td>
+</tr>
+<tr>
+<td><code>self.y2</code>, <code>self.y2sq</code></td>
+<td>128–131</td>
+<td><strong>MEDIUM</strong></td>
+<td>Stacked age matrices used in bias correction. Per-subject.</td>
+</tr>
+<tr>
+<td><code>self.num_subjects_train</code></td>
+<td>65</td>
+<td><strong>MEDIUM</strong></td>
+<td>Exact training N. In small TREs this can be a disclosure risk on its own (see <a href="../thresholds/">Thresholds</a>).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="model-parameters-what-should-be-transmitted">Model parameters — what should be transmitted<a class="headerlink" href="#model-parameters-what-should-be-transmitted" title="Permanent link">&para;</a></h3>
+<p>These are the <strong>only</strong> variables that should be eligible for egress (after SDC review):</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Line</th>
+<th>Risk</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>self.b1</code></td>
+<td>135</td>
+<td><strong>LOW</strong></td>
+<td>Regression coefficients β₁ (shape J,). These map PCA features to age. Do not contain per-subject data directly. Risk increases if J is small or N is small.</td>
+</tr>
+<tr>
+<td><code>self.b2</code>, <code>self.b2sq</code></td>
+<td>143–144</td>
+<td><strong>LOW</strong></td>
+<td>Bias correction coefficients (scalars or shape 2,). Aggregate parameters.</td>
+</tr>
+<tr>
+<td><code>self.gamma</code>, <code>self.gammasq</code></td>
+<td>147–148</td>
+<td><strong>LOW</strong></td>
+<td>Alternate model coefficients (shape J × F). Similar risk profile to b1.</td>
+</tr>
+<tr>
+<td><code>self.pca.components_</code></td>
+<td>—</td>
+<td><strong>MEDIUM</strong></td>
+<td>PCA eigenvectors (shape J × F). These are eigenvectors of the training data covariance matrix. In small cohorts they can leak information about the feature distribution, and in combination with <code>b1</code> they enable model inversion.</td>
+</tr>
+<tr>
+<td><code>self.x_mean</code>, <code>self.x_std</code></td>
+<td>81</td>
+<td><strong>LOW</strong></td>
+<td>Per-feature mean and standard deviation (shape F,). Population-level statistics — low re-identification risk for large N.</td>
+</tr>
+<tr>
+<td><code>self.y_mean</code></td>
+<td>78</td>
+<td><strong>LOW</strong></td>
+<td>Scalar mean of training ages. Low risk for large N.</td>
+</tr>
+<tr>
+<td><code>self.conf_beta</code></td>
+<td>86</td>
+<td><strong>LOW</strong></td>
+<td>Confound regression coefficients. Population-level.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="critical-egress-risk-save-and-save_text">Critical Egress Risk: <code>save()</code> and <code>save_text()</code><a class="headerlink" href="#critical-egress-risk-save-and-save_text" title="Permanent link">&para;</a></h2>
+<h3 id="save-pickle-serialisation"><code>save()</code> — pickle serialisation<a class="headerlink" href="#save-pickle-serialisation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># deltab/deltab.py line 169</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">))</span>
+</code></pre></div>
+<p><code>pickle.dump(self, ...)</code> serialises the <strong>entire</strong> <code>BrainDelta</code> object, including all HIGH-risk variables listed above. If this file is transmitted to a central server, it is equivalent to transmitting the full raw training dataset.</p>
+<p><strong>Required control:</strong> The <code>save()</code> output must <strong>never</strong> be approved for egress from a TRE node. A separate <code>save_weights_only()</code> method (not currently implemented) should be created that serialises only <code>b1</code>, <code>b2</code>, <code>b2sq</code>, <code>gamma</code>, <code>gammasq</code>, <code>x_mean</code>, <code>x_std</code>, <code>y_mean</code>, and <code>pca.components_</code>, explicitly excluding all per-subject arrays.</p>
+<h3 id="save_text-explicit-raw-data-export"><code>save_text()</code> — explicit raw data export<a class="headerlink" href="#save_text-explicit-raw-data-export" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># deltab/deltab.py lines 188–196</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">output_data</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="p">(</span><span class="s2">&quot;ytrain&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytrain</span><span class="p">),</span>   <span class="c1"># HIGH — raw ages</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="p">(</span><span class="s2">&quot;xtrain&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xtrain</span><span class="p">),</span>   <span class="c1"># HIGH — raw features</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="p">(</span><span class="s2">&quot;xnorm&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_norm</span><span class="p">),</span>    <span class="c1"># HIGH — normalised features</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="p">(</span><span class="s2">&quot;ynorm&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_demean</span><span class="p">),</span>  <span class="c1"># HIGH — demeaned ages</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="p">(</span><span class="s2">&quot;xreduce&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_reduced</span><span class="p">),</span> <span class="c1"># HIGH — PCA-reduced features</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="o">...</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">]</span>
+</code></pre></div>
+<p><code>save_text()</code> writes the raw training data, normalised features, and PCA-reduced features to disk in human-readable format. This function should be disabled or restricted in a TRE deployment — it creates files that could be inadvertently or deliberately transmitted through the egress gateway.</p>
+<p><strong>Required control:</strong> Remove or gate <code>save_text()</code> in TRE deployments. If needed for debugging, the output files must be classified as restricted data and subject to the same egress controls as raw data.</p>
+<hr />
+<h2 id="logging-risks">Logging Risks<a class="headerlink" href="#logging-risks" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># deltab/deltab.py line 75</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; - Number of subjects: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_subjects_train</span><span class="si">}</span><span class="s2">, number of features: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_features_train</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># deltab/main.py lines 46-48</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; - Removing subject </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2"> because NaN found in age or features&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; - Removed </span><span class="si">{</span><span class="n">num_subjects</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">ages_out</span><span class="p">)</span><span class="si">}</span><span class="s2"> subjects with NaN&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Log output can leak:</p>
+<ul>
+<li>Exact subject count N (sensitive in small TREs — see <a href="../thresholds/">Thresholds</a>)</li>
+<li>The number of subjects removed due to NaN (could indicate specific data quality issues)</li>
+<li>At DEBUG level, the index of each removed subject</li>
+</ul>
+<p><strong>Required control:</strong> In TRE deployments, set logging to WARNING or above. Log files must be treated as restricted outputs and not egressed without review. Debug-level logging must be disabled by default.</p>
+<hr />
+<h2 id="nan-imputation-risk">NaN Imputation Risk<a class="headerlink" href="#nan-imputation-risk" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># deltab/main.py lines 51-59</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">_nan_median_impute</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="o">...</span>
+</code></pre></div>
+<p>Median imputation computes per-feature medians from the local cohort. These medians are not stored as attributes and are not transmitted directly. However, if a central server requests imputation statistics (e.g. to perform imputation centrally), these are population-level summaries that require SDC review.</p>
+<hr />
+<h2 id="recommended-egress-controls-summary">Recommended Egress Controls Summary<a class="headerlink" href="#recommended-egress-controls-summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Output type</th>
+<th>Egress decision</th>
+<th>Control required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>save()</code> pickle file</td>
+<td><strong>BLOCK</strong></td>
+<td>Never egress — contains raw subject data</td>
+</tr>
+<tr>
+<td><code>save_text()</code> output folder</td>
+<td><strong>BLOCK</strong></td>
+<td>Never egress — contains raw features and ages</td>
+</tr>
+<tr>
+<td>Model weights only (b1, b2, PCA)</td>
+<td><strong>REVIEW</strong></td>
+<td>SDC review; check N ≥ threshold; check no inversion possible</td>
+</tr>
+<tr>
+<td>Per-subject delta vector</td>
+<td><strong>REVIEW</strong></td>
+<td>SDC review; suppression/aggregation required</td>
+</tr>
+<tr>
+<td>Aggregated delta statistics (mean, SD)</td>
+<td><strong>CONDITIONAL</strong></td>
+<td>N ≥ minimum cell size; no small subgroups</td>
+</tr>
+<tr>
+<td>Log files</td>
+<td><strong>REVIEW</strong></td>
+<td>Check for subject counts and indices before egress</td>
+</tr>
+<tr>
+<td>N (number of subjects)</td>
+<td><strong>CONDITIONAL</strong></td>
+<td>Only if N ≥ minimum disclosure threshold</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="code-modifications-required-for-tre-deployment">Code Modifications Required for TRE Deployment<a class="headerlink" href="#code-modifications-required-for-tre-deployment" title="Permanent link">&para;</a></h2>
+<p>The following changes are necessary before deltab can be deployed in a DPUK or similar TRE context. None of these are currently implemented.</p>
+<ol>
+<li>
+<p><strong>Implement <code>save_weights_only()</code></strong> — serialise only aggregate model parameters, explicitly excluding <code>xtrain</code>, <code>ytrain</code>, <code>x_norm</code>, <code>x_reduced</code>, <code>y_demean</code>, <code>ysq*</code>, <code>y2*</code>.</p>
+</li>
+<li>
+<p><strong>Disable or restrict <code>save_text()</code></strong> — gate behind a TRE deployment flag, or remove entirely from the TRE-targeted build.</p>
+</li>
+<li>
+<p><strong>Scrub subject-level data post-training</strong> — after <code>train()</code> completes, optionally zero or delete <code>xtrain</code>, <code>ytrain</code>, <code>x_norm</code>, <code>x_reduced</code> from the object to prevent accidental serialisation.</p>
+</li>
+<li>
+<p><strong>Enforce minimum N check</strong> — raise an exception or warning if <code>num_subjects_train</code> falls below the minimum disclosure threshold (suggested: N &lt; 10 for initial output; N &lt; 20 for subgroup analysis).</p>
+</li>
+<li>
+<p><strong>Restrict logging</strong> — default log level to WARNING in TRE mode; ensure log files are flagged as restricted outputs.</p>
+</li>
+<li>
+<p><strong>Add SACRO-compatible output metadata</strong> — tag all egress-eligible outputs with provenance metadata (node ID, N, model version, date) to support central audit trail.</p>
+</li>
+</ol>
+<hr />
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li>DPUK Data Access and Governance Framework. Dementias Platform UK. <a href="https://www.dementiasplatform.uk">https://www.dementiasplatform.uk</a></li>
+<li>TREvolution SACRO Project. Statistical Analysis for Controlled Release of Outputs. <a href="https://github.com/AI-SDC/SACRO">https://github.com/AI-SDC/SACRO</a></li>
+<li>Manco, L. et al. (2022). Assessing privacy risks from machine learning models trained in Trusted Research Environments. <em>arXiv</em>. <a href="https://arxiv.org/abs/2212.01233">https://arxiv.org/abs/2212.01233</a></li>
+<li>Meehan, A. et al. (2022). A federated approach to identifying combinations of features that distinguish healthy ageing from dementia. <em>BMC Medical Informatics and Decision Making</em>, 22, 276. <a href="https://doi.org/10.1186/s12911-022-01952-2">https://doi.org/10.1186/s12911-022-01952-2</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Federated Brain Age Estimation Requirements">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Federated Brain Age Estimation Requirements
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../membership-attacks/" class="md-footer__link md-footer__link--next" aria-label="Next: Membership Inference Attacks">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Membership Inference Attacks
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/external_links.js"></script>
+      
+    
+  </body>
+</html>
