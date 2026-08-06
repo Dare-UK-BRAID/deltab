@@ -102,3 +102,4 @@ np.savetxt("BRAIN_AGE_DELTA.txt", delta)
 - Smith, S.M. et al. (2019). Estimation of brain age delta from brain imaging. *NeuroImage*, 200, 528–539. [https://doi.org/10.1016/j.neuroimage.2019.06.017](https://doi.org/10.1016/j.neuroimage.2019.06.027)
 - Cole, J.H. et al. (2019). Multimodality neuroimaging brain-age in UK Biobank: relationship to biomedical, lifestyle, and cognitive factors. *Neurobiology of Aging*, 92, 34–43. [https://doi.org/10.1016/j.neurobiolaging.2020.03.014](https://doi.org/10.1016/j.neurobiolaging.2020.03.014)
 - Franke, K. & Gaser, C. (2019). Ten years of BrainAGE as a neuroimaging biomarker of brain aging: what insights have we gained? *Frontiers in Neurology*, 10, 789. [https://doi.org/10.3389/fneur.2019.00789](https://doi.org/10.3389/fneur.2019.00789)
+
