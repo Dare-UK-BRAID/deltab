@@ -153,5 +153,3 @@ The following changes are necessary before deltab can be deployed in a DPUK or s
 
 - DPUK Data Access and Governance Framework. Dementias Platform UK. [https://www.dementiasplatform.uk](https://www.dementiasplatform.uk)
 - TREvolution SACRO Project. Statistical Analysis for Controlled Release of Outputs. [https://github.com/AI-SDC/SACRO](https://github.com/AI-SDC/SACRO)
-- Manco, L. et al. (2022). Assessing privacy risks from machine learning models trained in Trusted Research Environments. *arXiv*. [https://arxiv.org/abs/2212.01233](https://arxiv.org/abs/2212.01233)
-- Meehan, A. et al. (2022). A federated approach to identifying combinations of features that distinguish healthy ageing from dementia. *BMC Medical Informatics and Decision Making*, 22, 276. [https://doi.org/10.1186/s12911-022-01952-2](https://doi.org/10.1186/s12911-022-01952-2)
