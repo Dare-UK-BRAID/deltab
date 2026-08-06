@@ -1,5 +1,5 @@
 """
-Figure 1 from Smith et al 
+Figure 1 from Smith et al. 
 """
 import numpy as np
 from matplotlib import pyplot as plt

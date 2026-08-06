@@ -2,53 +2,26 @@ name: Deploy Docs to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-      - master
-    paths:
-      - 'docs/**'
-      - 'mkdocs.yml'
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
+  contents: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    container:
+      image: squidfunk/mkdocs-material:latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
-          cache: 'pip'
-
-      - name: Install MkDocs Material
-        run: pip install mkdocs-material
-
-      - name: Build docs
-        run: mkdocs build --site-dir site
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          fetch-depth: 0
+      - name: Configure git credentials
+        run: |
+          git config --global --add safe.directory /github/workspace
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+      - name: Deploy docs
+        run: mkdocs gh-deploy --force --remote-branch gh-pages
