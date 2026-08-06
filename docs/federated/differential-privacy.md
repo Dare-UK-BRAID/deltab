@@ -117,9 +117,41 @@ For brain age applications specifically:
 
 ---
 
+## Running deltab Within a Teleport Federation
+
+[Teleport](https://doi.org/10.5281/zenodo.10055358) is a DARE UK Phase 1 project that connects TREs across the UK's four nations — specifically the SAIL Databank / Secure eResearch Platform (SeRP) at Swansea University and the Scottish National Safe Haven (SNS) / EPCC at the University of Edinburgh — so that a researcher can access data held in multiple TREs from a single secure environment, without any data moving from its host site.
+
+Teleport provides a **federated access layer**, not a federated learning framework. Data remains in place; what Teleport enables is coordinated job submission and result retrieval across connected TREs. For deltab this means:
+
+| Step | What happens | DP requirement |
+|------|-------------|----------------|
+| Job submission | Researcher submits deltab training job to each TRE node via the Teleport environment | None — no data involved |
+| Local training | deltab runs `train()` entirely within each TRE (SAIL or SNS) using locally held IDP data | No DP needed at this step |
+| Weight extraction | Each node exports only `b1`, `b2`, PCA components (see [Egress & Privacy Risk Analysis](egress.md)) | DP noise added before export using `_add_dp_noise()` above |
+| Egress via Teleport | Noisy weights pass through the TRE's standard SDC/SACRO egress process into the Teleport aggregation layer | TRE disclosure control review applies |
+| Aggregation | Central aggregator (FedAvg) combines weights from SAIL and SNS nodes | Operates on already-noised outputs |
+| Result return | Aggregated model returned to researcher in the Teleport environment | No raw subject data has moved |
+
+### Key DP considerations for Teleport deployment
+
+Because Teleport routes outputs through each TRE's existing egress gateway (SeRP at Swansea, eDRIS at SNS), the DP noise must be applied **before** egress — i.e. inside the TRE, as part of the deltab export step. The Teleport layer itself does not apply DP; it relies on each node's own disclosure controls.
+
+The recommended approach for a two-node SAIL + SNS federation:
+
+1. Each node trains deltab independently on its local cohort.
+2. DP-noised weights are submitted for egress review under each TRE's SDC process.
+3. Approved outputs flow through the Teleport aggregation layer to compute weighted-average parameters (FedAvg, weighted by N).
+4. The aggregated model is returned to the researcher without any per-subject data leaving either TRE.
+
+!!! note "Teleport and SeRP"
+    SAIL Databank operates on SeRP (the Secure eResearch Platform at Swansea University), which is also the primary target TRE for DPUK studies. deltab's compute requirements (≤70 MB RAM, ≤10s runtime for 500 subjects) are well within SeRP's standard job allocation, making the Teleport pathway practical without requiring special compute resources.
+
+---
+
 ## References
 
 - Dwork, C. & Roth, A. (2014). The Algorithmic Foundations of Differential Privacy. *Foundations and Trends in TCS*, 9(3–4). [https://doi.org/10.1561/0400000042](https://doi.org/10.1561/0400000042)
 - Abadi, M. et al. (2016). Deep Learning with Differential Privacy. *ACM CCS*. [https://doi.org/10.1145/2976749.2978318](https://doi.org/10.1145/2976749.2978318)
 - Holohan, N. et al. (2019). Diffprivlib: The IBM Differential Privacy Library. *arXiv*. [https://arxiv.org/abs/1907.02444](https://arxiv.org/abs/1907.02444)
 - Kaissis, G. et al. (2021). End-to-end privacy preserving deep learning on multi-institutional medical imaging. *Nature Machine Intelligence*, 3, 473–484. [https://doi.org/10.1038/s42256-021-00337-8](https://doi.org/10.1038/s42256-021-00337-8)
+- Orton, C. et al. (2023). TELEPORT: Connecting researchers to big data at light speed. DARE UK Phase 1 Final Report. Zenodo. [https://doi.org/10.5281/zenodo.10055358](https://doi.org/10.5281/zenodo.10055358)
