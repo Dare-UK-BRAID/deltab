@@ -746,6 +746,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#running-deltab-within-a-teleport-federation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running deltab Within a Teleport Federation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running deltab Within a Teleport Federation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-dp-considerations-for-teleport-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key DP considerations for Teleport deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1005,6 +1033,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#running-deltab-within-a-teleport-federation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running deltab Within a Teleport Federation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running deltab Within a Teleport Federation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-dp-considerations-for-teleport-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key DP considerations for Teleport deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1151,12 +1207,71 @@
 <li>DP does not protect against disclosure of group-level information (e.g. that a particular diagnostic group has elevated brain age) — only individual-level membership.</li>
 </ul>
 <hr />
+<h2 id="running-deltab-within-a-teleport-federation">Running deltab Within a Teleport Federation<a class="headerlink" href="#running-deltab-within-a-teleport-federation" title="Permanent link">&para;</a></h2>
+<p><a href="https://doi.org/10.5281/zenodo.10055358">Teleport</a> is a DARE UK Phase 1 project that connects TREs across the UK's four nations — specifically the SAIL Databank / Secure eResearch Platform (SeRP) at Swansea University and the Scottish National Safe Haven (SNS) / EPCC at the University of Edinburgh — so that a researcher can access data held in multiple TREs from a single secure environment, without any data moving from its host site.</p>
+<p>Teleport provides a <strong>federated access layer</strong>, not a federated learning framework. Data remains in place; what Teleport enables is coordinated job submission and result retrieval across connected TREs. For deltab this means:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What happens</th>
+<th>DP requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Job submission</td>
+<td>Researcher submits deltab training job to each TRE node via the Teleport environment</td>
+<td>None — no data involved</td>
+</tr>
+<tr>
+<td>Local training</td>
+<td>deltab runs <code>train()</code> entirely within each TRE (SAIL or SNS) using locally held IDP data</td>
+<td>No DP needed at this step</td>
+</tr>
+<tr>
+<td>Weight extraction</td>
+<td>Each node exports only <code>b1</code>, <code>b2</code>, PCA components (see <a href="../egress/">Egress &amp; Privacy Risk Analysis</a>)</td>
+<td>DP noise added before export using <code>_add_dp_noise()</code> above</td>
+</tr>
+<tr>
+<td>Egress via Teleport</td>
+<td>Noisy weights pass through the TRE's standard SDC/SACRO egress process into the Teleport aggregation layer</td>
+<td>TRE disclosure control review applies</td>
+</tr>
+<tr>
+<td>Aggregation</td>
+<td>Central aggregator (FedAvg) combines weights from SAIL and SNS nodes</td>
+<td>Operates on already-noised outputs</td>
+</tr>
+<tr>
+<td>Result return</td>
+<td>Aggregated model returned to researcher in the Teleport environment</td>
+<td>No raw subject data has moved</td>
+</tr>
+</tbody>
+</table>
+<h3 id="key-dp-considerations-for-teleport-deployment">Key DP considerations for Teleport deployment<a class="headerlink" href="#key-dp-considerations-for-teleport-deployment" title="Permanent link">&para;</a></h3>
+<p>Because Teleport routes outputs through each TRE's existing egress gateway (SeRP at Swansea, eDRIS at SNS), the DP noise must be applied <strong>before</strong> egress — i.e. inside the TRE, as part of the deltab export step. The Teleport layer itself does not apply DP; it relies on each node's own disclosure controls.</p>
+<p>The recommended approach for a two-node SAIL + SNS federation:</p>
+<ol>
+<li>Each node trains deltab independently on its local cohort.</li>
+<li>DP-noised weights are submitted for egress review under each TRE's SDC process.</li>
+<li>Approved outputs flow through the Teleport aggregation layer to compute weighted-average parameters (FedAvg, weighted by N).</li>
+<li>The aggregated model is returned to the researcher without any per-subject data leaving either TRE.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Teleport and SeRP</p>
+<p>SAIL Databank operates on SeRP (the Secure eResearch Platform at Swansea University), which is also the primary target TRE for DPUK studies. deltab's compute requirements (≤70 MB RAM, ≤10s runtime for 500 subjects) are well within SeRP's standard job allocation, making the Teleport pathway practical without requiring special compute resources.</p>
+</div>
+<hr />
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Dwork, C. &amp; Roth, A. (2014). The Algorithmic Foundations of Differential Privacy. <em>Foundations and Trends in TCS</em>, 9(3–4). <a href="https://doi.org/10.1561/0400000042">https://doi.org/10.1561/0400000042</a></li>
 <li>Abadi, M. et al. (2016). Deep Learning with Differential Privacy. <em>ACM CCS</em>. <a href="https://doi.org/10.1145/2976749.2978318">https://doi.org/10.1145/2976749.2978318</a></li>
 <li>Holohan, N. et al. (2019). Diffprivlib: The IBM Differential Privacy Library. <em>arXiv</em>. <a href="https://arxiv.org/abs/1907.02444">https://arxiv.org/abs/1907.02444</a></li>
 <li>Kaissis, G. et al. (2021). End-to-end privacy preserving deep learning on multi-institutional medical imaging. <em>Nature Machine Intelligence</em>, 3, 473–484. <a href="https://doi.org/10.1038/s42256-021-00337-8">https://doi.org/10.1038/s42256-021-00337-8</a></li>
+<li>Orton, C. et al. (2023). TELEPORT: Connecting researchers to big data at light speed. DARE UK Phase 1 Final Report. Zenodo. <a href="https://doi.org/10.5281/zenodo.10055358">https://doi.org/10.5281/zenodo.10055358</a></li>
 </ul>
 
 
