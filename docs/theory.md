@@ -117,8 +117,12 @@ d1 = y_b1 - self.y_demean                                         # δ₁
 
 The bias in δ₁ correlates with true age **Ỹ**. To remove it, δ₁ is regressed onto the age matrix **Y₂** and the fitted component is subtracted:
 
-$$\beta_2 = Y_2^+ \cdot \delta_1$$
-$$\delta_2 = \delta_1 - Y_2 \cdot \beta_2$$
+$$
+\begin{aligned}
+\beta_2 &= Y_2^+ \cdot \delta_1 \\
+\delta_2 &= \delta_1 - Y_2 \cdot \beta_2
+\end{aligned}
+$$
 
 For the linear-only case (`unbiased`), **Y₂ = Ỹ** (a column vector). For the quadratic case (`unbiased_quadratic`), **Y₂ = [Ỹ, Ỹ²ₒ]**, which additionally removes any systematic quadratic relationship between delta and true age.
 
