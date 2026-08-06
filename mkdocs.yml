@@ -45,8 +45,6 @@ extra_css:
 
 extra_javascript:
   - javascripts/external_links.js
-  - javascripts/mathjax.js
-  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
   - search
@@ -64,8 +62,6 @@ markdown_extensions:
   - pymdownx.snippets
   - pymdownx.tabbed:
       alternate_style: true
-  - pymdownx.arithmatex:
-      generic: true
   - toc:
       permalink: true
 

@@ -16,7 +16,7 @@ The **predicted age** produced by such a model is sometimes called *brain age*. 
 
 **Brain age delta** (δ) is the difference between a person's predicted brain age and their true chronological age:
 
-$$\delta = \text{brain age} - \text{true age}$$
+**δ = brain age − true age**
 
 A positive delta indicates the brain appears older than expected; a negative delta indicates the brain appears younger. Brain age delta has been proposed as a biomarker for brain health, with positive deltas associated with neurodegenerative disease, poor cardiovascular health, and cognitive decline.
 

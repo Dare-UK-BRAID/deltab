@@ -37,11 +37,11 @@ Model.ALTERNATE_QUADRATIC  # = 5
 
 The simple model fits a standard ridge-free ordinary least squares regression from the PCA-reduced feature matrix **X_r** to demeaned age **Ỹ**, and uses this fit to predict age for new subjects:
 
-$$\hat{Y}_{B1} = X_r \cdot \beta_1, \quad \beta_1 = X_r^+ \cdot \tilde{Y}$$
+> **β₁** = **X_r⁺** · **Ỹ**  →  predicted age **Ŷ_B1** = **X_r** · **β₁**
 
 Brain age delta is the residual:
 
-$$\delta_1 = \hat{Y}_{B1} - \tilde{Y}$$
+> **δ₁** = **Ŷ_B1** − **Ỹ**
 
 ### Why it is biased
 
@@ -61,12 +61,9 @@ Because **β₁** is fitted to minimise the sum of squared residuals, the predic
 
 The unbiased model takes the initial delta δ₁ from the simple model and removes its linear dependence on true age by regressing δ₁ onto **Ỹ** and subtracting the fitted component:
 
-$$
-\begin{aligned}
-\beta_2 &= \tilde{Y}^+ \cdot \delta_1 \\
-\delta_2 &= \delta_1 - \tilde{Y} \cdot \beta_2
-\end{aligned}
-$$
+> **β₂** = **Ỹ⁺** · **δ₁**
+>
+> **δ₂** = **δ₁** − **Ỹ** · **β₂**
 
 The result δ₂ is orthogonal to true age by construction — the correlation between predicted delta and true age is zero in the training data.
 
@@ -88,12 +85,9 @@ Use the unbiased model when:
 
 This model extends the unbiased correction to also remove any quadratic dependence of δ₁ on true age. The correction is regressed onto the two-column age matrix **Y₂ = [Ỹ, Ỹ²ₒ]** where Ỹ²ₒ is the squared age term orthogonalised with respect to Ỹ (see [Theory](theory.md#step-5--quadratic-age-term)):
 
-$$
-\begin{aligned}
-\beta_{2q} &= Y_2^+ \cdot \delta_1 \\
-\delta_{2q} &= \delta_1 - Y_2 \cdot \beta_{2q}
-\end{aligned}
-$$
+> **β₂q** = **Y₂⁺** · **δ₁**
+>
+> **δ₂q** = **δ₁** − **Y₂** · **β₂q**
 
 The result is orthogonal to both Ỹ and Ỹ²ₒ, meaning it has neither a linear nor a quadratic relationship with true age.
 
@@ -119,13 +113,11 @@ This is the **recommended default** for most neuroimaging applications because:
 
 The alternate model takes a fundamentally different approach. Rather than regressing features onto age, it **reverses the direction** and regresses age onto features. The brain age delta is then defined as the component of the feature matrix that is not explained by age:
 
-$$
-\begin{aligned}
-\Gamma &= Y_2^+ \cdot X_r \\
-d &= X_r - \tilde{Y} \cdot \Gamma \\
-\delta_{\text{alt}} &= d \cdot \Gamma^+
-\end{aligned}
-$$
+> **Γ** = **Ỹ⁺** · **X_r**
+>
+> **d** = **X_r** − **Ỹ** · **Γ**
+>
+> **δ_alt** = **d** · **Γ⁺**
 
 Conceptually, this asks: "given the subject's features, what is left over after removing the part that can be explained by knowing their true age?" This residual maps back to a scalar delta via the pseudoinverse of Γ.
 
@@ -144,13 +136,11 @@ The alternate model provides a robustness check. If results are consistent betwe
 
 The alternate quadratic model extends the alternate model by using the two-column age matrix **Y₂ = [Ỹ, Ỹ²ₒ]** instead of **Ỹ** alone, removing both linear and quadratic age effects from the feature matrix before computing the delta:
 
-$$
-\begin{aligned}
-\Gamma_q &= Y_2^+ \cdot X_r \\
-d &= X_r - Y_2 \cdot \Gamma_q \\
-\delta_{\text{alt-q}} &= d \cdot \Gamma_q[0, :]^+
-\end{aligned}
-$$
+> **Γ_q** = **Y₂⁺** · **X_r**
+>
+> **d** = **X_r** − **Y₂** · **Γ_q**
+>
+> **δ_alt-q** = **d** · **Γ_q[0,:]⁺**
 
 ### When to use it
 

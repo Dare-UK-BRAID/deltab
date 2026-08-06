@@ -21,6 +21,7 @@ This page describes the mathematical foundations of the brain age estimation fra
 | J | Number of PCA components retained |
 | **β₁** | Regression coefficients from features to age |
 | **β₂** | Correction coefficients |
+| **X⁺** | Moore-Penrose pseudoinverse of matrix X |
 
 ---
 
@@ -47,7 +48,7 @@ self.x_norm, self.x_mean, self.x_std = self._normalize(self.xtrain)  # X̃
 
 If confounding variables (e.g. scanner site, sex) are passed via the `conf` argument, their effect is regressed out of **X̃** before PCA and model fitting:
 
-$$\tilde{X} \leftarrow \tilde{X} - C \cdot (C^+ \tilde{X})$$
+> **X̃** ← **X̃** − **C** · (**C⁺** · **X̃**)
 
 where **C** is the confound matrix and **C⁺** is its pseudoinverse. The same confound removal is applied at prediction time.
 
@@ -83,7 +84,7 @@ The PCA fit is performed on the **training data only**. When predicting on new s
 
 To model non-linear (quadratic) dependence of brain features on age, a squared age term is constructed. Simply squaring **Ỹ** would be collinear with **Ỹ** for symmetric age distributions, so the squared term is first demeaned and then **orthogonalised** with respect to **Ỹ**:
 
-$$\tilde{Y}^2_o = \tilde{Y}^2 - \text{mean}(\tilde{Y}^2) - \left(\frac{\tilde{Y}}{||\tilde{Y}||} \cdot \tilde{Y}^2_\text{demean}\right) \cdot \tilde{Y}$$
+> **Ỹ²ₒ** = demean(**Ỹ²**) − ((**Ỹ** / ‖**Ỹ**‖) · demean(**Ỹ²**)) · **Ỹ**
 
 This ensures the quadratic component captures only the truly quadratic variation, not the linear component already captured by **Ỹ**.
 
@@ -96,15 +97,15 @@ The combined age matrix for quadratic models is then **Y₂ = [Ỹ, Ỹ²ₒ]**,
 
 ### Step 6 — Initial age prediction (β₁)
 
-The reduced feature matrix **X_r** is used to predict demeaned age **Ỹ** via ordinary least squares using the Moore-Penrose pseudoinverse:
+The PCA-reduced feature matrix **X_r** is used to predict demeaned age **Ỹ** via ordinary least squares using the Moore-Penrose pseudoinverse:
 
-$$\hat{Y}_{B1} = X_r \cdot \beta_1, \quad \text{where } \beta_1 = X_r^+ \cdot \tilde{Y}$$
+> **β₁** = **X_r⁺** · **Ỹ**  →  predicted age **Ŷ_B1** = **X_r** · **β₁**
 
 The initial brain age delta is:
 
-$$\delta_1 = \hat{Y}_{B1} - \tilde{Y}$$
+> **δ₁** = **Ŷ_B1** − **Ỹ**
 
-This is what the `simple` model returns (after adding back the age mean). It is systematically biased: subjects at the extremes of the age distribution have artificially large or small deltas because regression pulls all predictions towards the mean.
+This is what the `simple` model returns (after adding back the age mean). It is systematically biased — subjects at the extremes of the age distribution have artificially large or small deltas because regression pulls all predictions towards the mean.
 
 ```python
 # From deltab.py
@@ -115,14 +116,11 @@ d1 = y_b1 - self.y_demean                                         # δ₁
 
 ### Step 7 — Bias correction (β₂)
 
-The bias in δ₁ correlates with true age **Ỹ**. To remove it, δ₁ is regressed onto the age matrix **Y₂** and the fitted component is subtracted:
+The bias in δ₁ correlates with true age. To remove it, δ₁ is regressed onto the age matrix **Y₂** and the fitted component is subtracted:
 
-$$
-\begin{aligned}
-\beta_2 &= Y_2^+ \cdot \delta_1 \\
-\delta_2 &= \delta_1 - Y_2 \cdot \beta_2
-\end{aligned}
-$$
+> **β₂** = **Y₂⁺** · **δ₁**
+>
+> **δ₂** = **δ₁** − **Y₂** · **β₂**
 
 For the linear-only case (`unbiased`), **Y₂ = Ỹ** (a column vector). For the quadratic case (`unbiased_quadratic`), **Y₂ = [Ỹ, Ỹ²ₒ]**, which additionally removes any systematic quadratic relationship between delta and true age.
 
