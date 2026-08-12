@@ -12,13 +12,13 @@
         <meta name="author" content="Martin Craig">
       
       
-        <link rel="canonical" href="https://dare-uk-braid.github.io/deltab/cli/">
+        <link rel="canonical" href="https://dare-uk-braid.github.io/deltab/project-metadata/">
       
       
-        <link rel="prev" href="../installation/">
+        <link rel="prev" href="../examples/">
       
       
-        <link rel="next" href="../api/">
+        <link rel="next" href="../federated/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Command Line Interface - deltab — Brain Age Estimation</title>
+        <title>Input Data Metadata - deltab — Brain Age Estimation</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#command-line-interface" class="md-skip">
+        <a href="#input-data-metadata" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Command Line Interface
+              Input Data Metadata
             
           </span>
         </div>
@@ -369,37 +369,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Command Line Interface
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
         
   
   
@@ -415,192 +388,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#basic-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Basic usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#complete-argument-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Complete argument reference
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Complete argument reference">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#input-model-loading" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Input / model loading
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#feature-pre-processing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Feature pre-processing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prediction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prediction
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#model-saving" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Model saving
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#general" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        General
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Examples
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#train-and-predict-on-the-same-cohort" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Train and predict on the same cohort
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#train-and-save-the-model-predict-on-a-new-cohort" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Train and save the model, predict on a new cohort
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#handle-subjects-with-missing-features" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Handle subjects with missing features
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#use-kaiser-guttmann-component-selection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use Kaiser-Guttmann component selection
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#input-file-format" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Input file format
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#output-file-format" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output file format
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -663,10 +450,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../project-metadata/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input Data Metadata
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -682,6 +496,203 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ages-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ages File
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ages File">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-matrix-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature Matrix File
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Feature Matrix File">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-3-subjects-4-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example (3 subjects, 4 features)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraints_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-idp-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical IDP sources
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#confound-matrix-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confound Matrix File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nan-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NaN Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pca-component-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PCA Component Selection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subject-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subject Alignment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -999,10 +1010,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#basic-usage" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Basic usage
+        Overview
       
     </span>
   </a>
@@ -1010,22 +1021,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#complete-argument-reference" class="md-nav__link">
+  <a href="#ages-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Complete argument reference
+        Ages File
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Complete argument reference">
+    <nav class="md-nav" aria-label="Ages File">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#input-model-loading" class="md-nav__link">
+  <a href="#format" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Input / model loading
+        Format
       
     </span>
   </a>
@@ -1033,10 +1044,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#feature-pre-processing" class="md-nav__link">
+  <a href="#example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Feature pre-processing
+        Example
       
     </span>
   </a>
@@ -1044,32 +1055,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#prediction" class="md-nav__link">
+  <a href="#constraints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prediction
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#model-saving" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Model saving
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#general" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        General
+        Constraints
       
     </span>
   </a>
@@ -1082,22 +1071,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#feature-matrix-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Examples
+        Feature Matrix File
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Examples">
+    <nav class="md-nav" aria-label="Feature Matrix File">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#train-and-predict-on-the-same-cohort" class="md-nav__link">
+  <a href="#format_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Train and predict on the same cohort
+        Format
       
     </span>
   </a>
@@ -1105,10 +1094,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#train-and-save-the-model-predict-on-a-new-cohort" class="md-nav__link">
+  <a href="#example-3-subjects-4-features" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Train and save the model, predict on a new cohort
+        Example (3 subjects, 4 features)
       
     </span>
   </a>
@@ -1116,10 +1105,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#handle-subjects-with-missing-features" class="md-nav__link">
+  <a href="#constraints_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Handle subjects with missing features
+        Constraints
       
     </span>
   </a>
@@ -1127,10 +1116,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#use-kaiser-guttmann-component-selection" class="md-nav__link">
+  <a href="#typical-idp-sources" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Use Kaiser-Guttmann component selection
+        Typical IDP sources
       
     </span>
   </a>
@@ -1143,10 +1132,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#input-file-format" class="md-nav__link">
+  <a href="#confound-matrix-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Input file format
+        Confound Matrix File
       
     </span>
   </a>
@@ -1154,10 +1143,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#output-file-format" class="md-nav__link">
+  <a href="#nan-handling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Output file format
+        NaN Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pca-component-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PCA Component Selection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subject-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subject Alignment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
       
     </span>
   </a>
@@ -1184,228 +1206,294 @@
   
 
 
-<h1 id="command-line-interface">Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permanent link">&para;</a></h1>
-<p>The <code>deltab</code> command provides a full brain age estimation workflow from the terminal. It can train a model from scratch, load a previously saved model, apply any of the five prediction models, and write outputs to text files.</p>
-<h2 id="basic-usage">Basic usage<a class="headerlink" href="#basic-usage" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>deltab<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
-</code></pre></div>
-<p>Running <code>deltab</code> with no arguments prints the help summary.</p>
+<h1 id="input-data-metadata">Input Data Metadata<a class="headerlink" href="#input-data-metadata" title="Permanent link">&para;</a></h1>
+<p>This page describes the format, structure, and constraints of the data files required to run deltab, whether via the command line or the Python API.</p>
 <hr />
-<h2 id="complete-argument-reference">Complete argument reference<a class="headerlink" href="#complete-argument-reference" title="Permanent link">&para;</a></h2>
-<h3 id="input-model-loading">Input / model loading<a class="headerlink" href="#input-model-loading" title="Permanent link">&para;</a></h3>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>deltab requires two mandatory inputs and one optional input:</p>
 <table>
 <thead>
 <tr>
-<th>Argument</th>
-<th>Type</th>
-<th>Description</th>
+<th>Input</th>
+<th>CLI argument</th>
+<th>Python API</th>
+<th>Required</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>--train-ages FILE</code></td>
-<td>path</td>
-<td>Delimited text file containing one true age per subject (1D). Space, comma, or tab delimited. Header rows are handled automatically.</td>
+<td>True chronological ages</td>
+<td><code>--train-ages</code> / <code>--predict-ages</code></td>
+<td><code>ages</code> parameter</td>
+<td>Yes</td>
 </tr>
 <tr>
-<td><code>--train-features FILE</code></td>
-<td>path</td>
-<td>Delimited text file containing the feature matrix (subjects × features, 2D). One row per subject, one column per feature.</td>
+<td>Brain feature matrix (IDPs)</td>
+<td><code>--train-features</code> / <code>--predict-features</code></td>
+<td><code>features</code> parameter</td>
+<td>Yes</td>
 </tr>
 <tr>
-<td><code>--load FILE</code></td>
-<td>path</td>
-<td>Skip training and load a previously saved model from a pickle file. Cannot be combined with <code>--train-ages</code> / <code>--train-features</code>.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="feature-pre-processing">Feature pre-processing<a class="headerlink" href="#feature-pre-processing" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--feature-nans {median,remove}</code></td>
-<td><code>median</code></td>
-<td>Strategy for subjects who have NaN in one or more features. <code>median</code> replaces each NaN with the median value of that feature across all subjects. <code>remove</code> drops those subjects entirely from training.</td>
-</tr>
-<tr>
-<td><code>--feature-proportion FLOAT</code></td>
-<td>—</td>
-<td>Proportion (0–1) of PCA components to retain. E.g. <code>0.1</code> retains the top 10% of components. Mutually exclusive with <code>--feature-num</code>, <code>--feature-var</code>, and <code>--kaiser-guttmann</code>.</td>
-</tr>
-<tr>
-<td><code>--feature-num INT</code></td>
-<td>—</td>
-<td>Exact number of PCA components to retain.</td>
-</tr>
-<tr>
-<td><code>--feature-var FLOAT</code></td>
-<td>—</td>
-<td>Retain components that collectively explain at least this proportion of total variance (0–1).</td>
-</tr>
-<tr>
-<td><code>--kaiser-guttmann</code></td>
-<td>off</td>
-<td>Select PCA components using the Kaiser-Guttmann criterion (retain components whose eigenvalue exceeds the mean eigenvalue).</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="admonition-title">No PCA reduction</p>
-<p>If none of the <code>--feature-*</code> options are specified, all features are used without PCA reduction. This is only appropriate when the number of subjects substantially exceeds the number of features (N &gt;&gt; F).</p>
-</div>
-<h3 id="prediction">Prediction<a class="headerlink" href="#prediction" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--predict {age,delta}</code></td>
-<td><code>delta</code></td>
-<td>Output mode. <code>age</code> outputs the predicted brain age (years). <code>delta</code> outputs the brain age delta (predicted age minus true age, in years).</td>
-</tr>
-<tr>
-<td><code>--predict-model MODEL</code></td>
-<td><code>unbiased_quadratic</code></td>
-<td>Which model to use. One of <code>simple</code>, <code>unbiased</code>, <code>unbiased_quadratic</code>, <code>alternate</code>, <code>alternate_quadratic</code>. See <a href="../models/">Prediction Models</a>.</td>
-</tr>
-<tr>
-<td><code>--predict-output FILE</code></td>
-<td><code>deltab.txt</code></td>
-<td>Path to write the prediction results to. One value per subject, one per line.</td>
-</tr>
-<tr>
-<td><code>--predict-ages FILE</code></td>
-<td>—</td>
-<td>True ages for prediction subjects. Only needed when predicting on a different set of subjects from those used in training. Must be provided together with <code>--predict-features</code>.</td>
-</tr>
-<tr>
-<td><code>--predict-features FILE</code></td>
-<td>—</td>
-<td>Feature matrix for prediction subjects. Only needed when predicting on different subjects.</td>
-</tr>
-<tr>
-<td><code>--true-ages-output FILE</code></td>
-<td>—</td>
-<td>Write the true ages of subjects actually included in the prediction to this file. Useful when <code>--feature-nans remove</code> may have dropped some subjects, to keep ages aligned with predicted deltas.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="model-saving">Model saving<a class="headerlink" href="#model-saving" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--save FILE</code></td>
-<td>Save the trained model to a pickle file for later reuse with <code>--load</code>.</td>
-</tr>
-<tr>
-<td><code>--save-text DIR</code></td>
-<td>Save the trained model data (feature matrix, PCA components, age vectors) as plain text files in a directory. Useful for inspection or loading into other analysis tools. Note: there is currently no <code>--load</code> facility for text-format models.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="general">General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--overwrite</code></td>
-<td>Overwrite the output file if it already exists. Without this flag, deltab will error rather than silently overwrite results.</td>
-</tr>
-<tr>
-<td><code>--debug</code></td>
-<td>Enable verbose debug logging to stderr.</td>
-</tr>
-<tr>
-<td><code>--version</code> / <code>-v</code></td>
-<td>Print the version string and exit.</td>
+<td>Confound matrix</td>
+<td><em>(Python API only)</em></td>
+<td><code>conf</code> parameter to <code>train()</code> / <code>predict()</code></td>
+<td>No</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<h3 id="train-and-predict-on-the-same-cohort">Train and predict on the same cohort<a class="headerlink" href="#train-and-predict-on-the-same-cohort" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>deltab<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--train-ages<span class="w"> </span>ages.txt<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--train-features<span class="w"> </span>idps.txt<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--feature-proportion<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>--predict-model<span class="w"> </span>unbiased_quadratic<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--predict<span class="w"> </span>delta<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>--predict-output<span class="w"> </span>brain_age_delta.txt
+<h2 id="ages-file">Ages File<a class="headerlink" href="#ages-file" title="Permanent link">&para;</a></h2>
+<h3 id="format">Format<a class="headerlink" href="#format" title="Permanent link">&para;</a></h3>
+<p>A plain text file containing one chronological age per subject, one value per line. The file is loaded with <code>numpy.loadtxt</code> and must resolve to a 1-dimensional array after loading.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shape</td>
+<td>(N,) — one value per subject</td>
+</tr>
+<tr>
+<td>Data type</td>
+<td>Float (integer values are accepted and cast)</td>
+</tr>
+<tr>
+<td>Units</td>
+<td>Years</td>
+</tr>
+<tr>
+<td>Delimiter</td>
+<td>Space, comma, or tab — detected automatically</td>
+</tr>
+<tr>
+<td>Header row</td>
+<td>Optional — one header row is skipped automatically if present</td>
+</tr>
+<tr>
+<td>Missing values</td>
+<td>NaN is accepted; subjects with NaN age are removed (see <a href="#nan-handling">NaN handling</a>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>72.4
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>68.1
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>55.9
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>61.3
 </code></pre></div>
-<p>This is the most common usage: train on a cohort, apply the unbiased quadratic model, and write the brain age delta for each subject.</p>
-<h3 id="train-and-save-the-model-predict-on-a-new-cohort">Train and save the model, predict on a new cohort<a class="headerlink" href="#train-and-save-the-model-predict-on-a-new-cohort" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Step 1: train on the normative cohort and save the model</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>deltab<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>--train-ages<span class="w"> </span>normative_ages.txt<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>--train-features<span class="w"> </span>normative_idps.txt<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>--feature-proportion<span class="w"> </span><span class="m">0</span>.15<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span>--save<span class="w"> </span>trained_model.pkl<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span>--predict<span class="w"> </span>age<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span>--predict-output<span class="w"> </span>/dev/null
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Step 2: apply the saved model to a new clinical cohort</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>deltab<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span>--load<span class="w"> </span>trained_model.pkl<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">  </span>--predict-ages<span class="w"> </span>clinical_ages.txt<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">  </span>--predict-features<span class="w"> </span>clinical_idps.txt<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">  </span>--predict-model<span class="w"> </span>unbiased_quadratic<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">  </span>--predict<span class="w"> </span>delta<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">  </span>--predict-output<span class="w"> </span>clinical_delta.txt
+<p>Or equivalently with a header:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>age
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>72.4
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>68.1
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>55.9
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>61.3
 </code></pre></div>
-<h3 id="handle-subjects-with-missing-features">Handle subjects with missing features<a class="headerlink" href="#handle-subjects-with-missing-features" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Remove subjects with any NaN and record which subjects were kept</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>deltab<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>--train-ages<span class="w"> </span>ages.txt<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>--train-features<span class="w"> </span>idps.txt<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>--feature-nans<span class="w"> </span>remove<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span>--true-ages-output<span class="w"> </span>ages_included.txt<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span>--predict<span class="w"> </span>delta<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span>--predict-output<span class="w"> </span>delta.txt
-</code></pre></div>
-<p><code>ages_included.txt</code> will contain only the ages of subjects that were not removed, keeping the age vector aligned with the delta output.</p>
-<h3 id="use-kaiser-guttmann-component-selection">Use Kaiser-Guttmann component selection<a class="headerlink" href="#use-kaiser-guttmann-component-selection" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>deltab<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--train-ages<span class="w"> </span>ages.txt<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--train-features<span class="w"> </span>idps.txt<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>--kaiser-guttmann<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span>--predict<span class="w"> </span>delta<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span>--predict-output<span class="w"> </span>delta_kg.txt
-</code></pre></div>
-<hr />
-<h2 id="input-file-format">Input file format<a class="headerlink" href="#input-file-format" title="Permanent link">&para;</a></h2>
-<p>Both <code>--train-ages</code> / <code>--predict-ages</code> and <code>--train-features</code> / <code>--predict-features</code> accept text files that are:</p>
+<h3 id="constraints">Constraints<a class="headerlink" href="#constraints" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Space, comma, or tab delimited</li>
-<li>Optionally quoted (single or double)</li>
-<li>Optionally with a single header row (auto-detected)</li>
+<li>All ages must be in the same unit (years).</li>
+<li>Ages do not need to be sorted.</li>
+<li>There is no hard minimum or maximum age, but the model assumes a roughly continuous age range. Mixing paediatric and elderly subjects in a single training run is not recommended.</li>
+<li>For federated deployments, minimum N ≥ 100 is recommended for meaningful bias correction (see <a href="../federated/thresholds/">Disclosure Thresholds</a>).</li>
 </ul>
-<p>The age file should contain a single column of numeric values. The feature file should be a 2D matrix with subjects as rows and features as columns. Column headers, if present, are ignored.</p>
 <hr />
-<h2 id="output-file-format">Output file format<a class="headerlink" href="#output-file-format" title="Permanent link">&para;</a></h2>
-<p>Predicted ages or deltas are written as plain text, one value per line, with no header. The number of lines equals the number of subjects in the prediction set. Values are written using NumPy's <code>savetxt</code> with default formatting (up to 18 significant figures).</p>
+<h2 id="feature-matrix-file">Feature Matrix File<a class="headerlink" href="#feature-matrix-file" title="Permanent link">&para;</a></h2>
+<h3 id="format_1">Format<a class="headerlink" href="#format_1" title="Permanent link">&para;</a></h3>
+<p>A plain text file containing one row per subject and one column per imaging-derived phenotype (IDP) or other brain measurement. The file is loaded with <code>numpy.loadtxt</code> and must resolve to a 2-dimensional array.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shape</td>
+<td>(N, F) — N subjects × F features</td>
+</tr>
+<tr>
+<td>Data type</td>
+<td>Float</td>
+</tr>
+<tr>
+<td>Units</td>
+<td>Any — features are z-score normalised internally before use</td>
+</tr>
+<tr>
+<td>Delimiter</td>
+<td>Space, comma, or tab — detected automatically</td>
+</tr>
+<tr>
+<td>Header row</td>
+<td>Optional — one header row is skipped automatically if present</td>
+</tr>
+<tr>
+<td>Missing values</td>
+<td>NaN accepted per cell; handled by removal or median imputation (see <a href="#nan-handling">NaN handling</a>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-3-subjects-4-features">Example (3 subjects, 4 features)<a class="headerlink" href="#example-3-subjects-4-features" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>0.42  1.13  -0.87  2.01
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>0.39  1.05  -0.91  1.98
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>0.51  1.22  -0.79  2.15
+</code></pre></div>
+<h3 id="constraints_1">Constraints<a class="headerlink" href="#constraints_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>The number of rows must exactly match the number of subjects in the ages file.</li>
+<li>The same set of features (same columns, same order) must be used for both training and prediction. deltab will raise an error if <code>features.shape[1]</code> differs between <code>train()</code> and <code>predict()</code>.</li>
+<li>Features do not need to be pre-normalised — deltab computes per-feature mean and standard deviation from the training set and applies the same normalisation to prediction data.</li>
+<li>There is no built-in upper limit on F, but PCA reduction is strongly recommended for F &gt; 50 (see <a href="#pca-component-selection">PCA selection</a> below).</li>
+</ul>
+<h3 id="typical-idp-sources">Typical IDP sources<a class="headerlink" href="#typical-idp-sources" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Typical F</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FSL BRAID T1 structural pipeline</td>
+<td>~100–300</td>
+<td>Cortical thickness, subcortical volumes, white matter metrics</td>
+</tr>
+<tr>
+<td>FSL TBSS (diffusion)</td>
+<td>~50–100</td>
+<td>FA, MD, MO per tract</td>
+</tr>
+<tr>
+<td>FLAIR WMH pipeline</td>
+<td>~10–20</td>
+<td>WMH volume, lesion count per region</td>
+</tr>
+<tr>
+<td>Combined BRAID IDPs</td>
+<td>~1,000</td>
+<td>Full multi-modal IDP set</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="confound-matrix-file">Confound Matrix File<a class="headerlink" href="#confound-matrix-file" title="Permanent link">&para;</a></h2>
+<p><em>(Python API only — not available via CLI)</em></p>
+<p>An optional matrix of confounding variables whose effect should be removed from the feature matrix before model fitting.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shape</td>
+<td>(N, C) — N subjects × C confounds</td>
+</tr>
+<tr>
+<td>Data type</td>
+<td>Float</td>
+</tr>
+<tr>
+<td>Typical confounds</td>
+<td>Scanner site, head motion (mean FD), sex (encoded as 0/1)</td>
+</tr>
+</tbody>
+</table>
+<p>Confound regression is performed by projecting the normalised feature matrix onto the confound space and subtracting the fitted component before PCA. The same confound matrix must be passed to <code>predict()</code> if it was used during <code>train()</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">b</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">conf</span><span class="o">=</span><span class="n">confounds</span><span class="p">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">conf</span><span class="o">=</span><span class="n">confounds</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">Model</span><span class="o">.</span><span class="n">UNBIASED_QUADRATIC</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="nan-handling">NaN Handling<a class="headerlink" href="#nan-handling" title="Permanent link">&para;</a></h2>
+<p>deltab provides two strategies for subjects with NaN values in the feature matrix, controlled by <code>--feature-nans</code> (CLI) or by pre-processing before calling <code>train()</code> (Python API):</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>CLI value</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Median imputation <em>(default)</em></td>
+<td><code>median</code></td>
+<td>Replaces each NaN with the median value of that feature across all subjects. Subject is retained.</td>
+</tr>
+<tr>
+<td>Subject removal</td>
+<td><code>remove</code></td>
+<td>Removes any subject with at least one NaN feature (or NaN age) from both the ages and features arrays before training.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">NaN removal changes N</p>
+<p>When using <code>--feature-nans remove</code>, the number of subjects passed to the model may be less than the number of rows in your input files. Use <code>--true-ages-output</code> to save the ages of the subjects actually used, so downstream analyses remain aligned.</p>
+</div>
+<hr />
+<h2 id="pca-component-selection">PCA Component Selection<a class="headerlink" href="#pca-component-selection" title="Permanent link">&para;</a></h2>
+<p>The number of PCA components retained from the feature matrix (J) is controlled by one of four mutually exclusive options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>CLI</th>
+<th>Python</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Proportion of features</td>
+<td><code>--feature-proportion 0.1</code></td>
+<td><code>ev_proportion=0.1</code></td>
+<td>Retain J = round(0.1 × F) components</td>
+</tr>
+<tr>
+<td>Fixed number</td>
+<td><code>--feature-num 100</code></td>
+<td><code>ev_num=100</code></td>
+<td>Retain exactly J components</td>
+</tr>
+<tr>
+<td>Variance explained</td>
+<td><code>--feature-var 0.9</code></td>
+<td><code>ev_var=0.9</code></td>
+<td>Retain components explaining ≥ 90% of variance</td>
+</tr>
+<tr>
+<td>Kaiser-Guttmann</td>
+<td><code>--kaiser-guttmann</code></td>
+<td><code>ev_kg=True</code></td>
+<td>Retain components with eigenvalue &gt; mean eigenvalue</td>
+</tr>
+<tr>
+<td>None (use all features)</td>
+<td><em>(omit all)</em></td>
+<td><em>(omit all)</em></td>
+<td>No PCA — use raw normalised features</td>
+</tr>
+</tbody>
+</table>
+<p>Smith et al. (2019) recommend <code>ev_proportion=0.1</code> (10% of features) as a robust default for most neuroimaging datasets. Using all features without PCA is only appropriate when F is small (&lt; 20) or features are already known to be low-dimensional.</p>
+<hr />
+<h2 id="subject-alignment">Subject Alignment<a class="headerlink" href="#subject-alignment" title="Permanent link">&para;</a></h2>
+<p>The ages file and features file must be <strong>row-aligned</strong>: row <em>i</em> of the features matrix corresponds to the subject whose age is at position <em>i</em> in the ages vector. deltab does not perform any subject matching by ID — alignment is purely positional.</p>
+<p>If subjects are removed due to NaN (with <code>--feature-nans remove</code>), deltab removes the same indices from both arrays simultaneously, preserving alignment. Use <code>--true-ages-output</code> to retrieve the final aligned age vector after removal.</p>
+<hr />
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Smith, S.M. et al. (2019). Estimation of brain age delta from brain imaging. <em>NeuroImage</em>, 200, 528–539. <a href="https://doi.org/10.1016/j.neuroimage.2019.06.017">https://doi.org/10.1016/j.neuroimage.2019.06.017</a></li>
+</ul>
 
 
 
@@ -1441,7 +1529,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../installation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Installation">
+          <a href="../examples/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Examples">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1451,20 +1539,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Installation
+                Examples
               </div>
             </div>
           </a>
         
         
           
-          <a href="../api/" class="md-footer__link md-footer__link--next" aria-label="Next: Python API">
+          <a href="../federated/" class="md-footer__link md-footer__link--next" aria-label="Next: Federated Brain Age Estimation Requirements">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Python API
+                Federated Brain Age Estimation Requirements
               </div>
             </div>
             <div class="md-footer__button md-icon">
