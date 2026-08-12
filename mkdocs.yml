@@ -73,6 +73,7 @@ nav:
   - Command Line Interface: cli.md
   - Python API: api.md
   - Examples: examples.md
+  - Input Data Metadata: project-metadata.md
   - Federated Brain Age Estimation Requirements:
     - federated/index.md
     - Egress & Privacy Risk Analysis: federated/egress.md
